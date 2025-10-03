@@ -9,7 +9,12 @@ export default function Layout({ children }) {
       <Navbar />
 
       {/* Main Content */}
-      <Container maxW="6xl" flex="1" py={8}>
+      <Container
+        maxW={{ base: "100%", md: "6xl" }}
+        flex="1"
+        py='100px'
+        px={{ base: 5, md: 2 }}
+      >
         {children}
       </Container>
 
