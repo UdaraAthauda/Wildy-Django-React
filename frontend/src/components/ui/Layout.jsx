@@ -15,8 +15,8 @@ export default function Layout({ children }) {
         <Sidebar />
 
         {/* Page Content */}
-        <Box flex="1" py={{ base: 5, md: 8 }} mt="60px">
-          <Container maxW={{ base: "100%", md: "6xl" }}>
+        <Box flex="1" py={{ base: 5, md: 5 }} mt="60px">
+          <Container>
             {children}
           </Container>
         </Box>

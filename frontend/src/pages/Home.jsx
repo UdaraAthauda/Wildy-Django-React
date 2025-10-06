@@ -1,7 +1,8 @@
 import api from "@/api";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { SimpleGrid, Button, Card, Image, Text } from "@chakra-ui/react";
+import { SimpleGrid, Button, Card, Image, Text, Tag } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -28,12 +29,19 @@ export default function Home() {
       <SimpleGrid columns={{ base: 2, md: 5 }} gap={3}>
         {data.map((d) => (
           <Card.Root
+            as={Link}
+            to={`/info/${d.id}`}
             key={d.id}
             w={{ base: "full", md: "200px" }}
+            size={"sm"}
             overflow="hidden"
-            bg={"teal.100"}
+            bg={"green.400"}
             justifySelf={"center"}
-            _hover={{ shadow: "xl", transform: "scale(1.03)", transition: "0.2s" }}
+            _hover={{
+              shadow: "xl",
+              transform: "scale(1.03)",
+              transition: "0.2s",
+            }}
           >
             <Image
               src={d.images[0].image}
@@ -43,14 +51,27 @@ export default function Home() {
               h={"150px"}
             />
             <Card.Body gap="2">
-              <Card.Title>{d.name}</Card.Title>
-              <Card.Description>{d.common_names}</Card.Description>
+              <Card.Title fontSize={{ base: "xs", md: "md" }}>
+                {d.name}
+                <Text fontSize={"xs"}>({d.scientific_name})</Text>
+              </Card.Title>
+              <Card.Description fontWeight={'semibold'}>{d.common_names}</Card.Description>
+              <Tag.Root
+                size={"sm"}
+                variant={'solid'}
+                alignSelf={"start"}
+                colorPalette={
+                  d.venom_type === "venomous"
+                    ? "red"
+                    : d.venom_type === "mildly_venomous"
+                    ? "orange"
+                    : "green"
+                }
+              >
+                <Tag.Label>{d.venom_type}</Tag.Label>
+              </Tag.Root>
             </Card.Body>
-            <Card.Footer alignSelf={"center"}>
-              <Button variant="subtle" colorPalette={"teal"} size={"sm"}>
-                Buy now
-              </Button>
-            </Card.Footer>
+            <Card.Footer alignSelf={"center"}></Card.Footer>
           </Card.Root>
         ))}
       </SimpleGrid>
