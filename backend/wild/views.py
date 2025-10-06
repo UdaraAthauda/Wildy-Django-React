@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework import generics
+from rest_framework import generics, filters
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -37,6 +37,9 @@ def snake_info_list(request):
 class SnakeListView(generics.ListAPIView):
     queryset = Snake.objects.all()
     serializer_class = SnakeDetailSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name', 'scientific_name', 'common_names', 'venom_type', 'family']
+    
     
     
 class SnakeDetailView(generics.RetrieveAPIView):

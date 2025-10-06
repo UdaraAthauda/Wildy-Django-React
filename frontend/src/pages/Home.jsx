@@ -1,6 +1,7 @@
 import api from "@/api";
+import Searchbar from "@/components/Searchbar";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { SimpleGrid, Button, Card, Image, Text, Tag } from "@chakra-ui/react";
+import { SimpleGrid, Button, Card, Image, Text, Tag, Flex, Heading } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -20,12 +21,23 @@ export default function Home() {
     getData();
   }, []);
 
+  // get Searched informations
+  const handleSearchResults = (results) => {
+    setData(results)
+  }
+
   if (data.length === 0) {
     return <LoadingSpinner />;
   }
 
   return (
     <>
+
+      <Flex align={'center'} justify={{base:'center', md:'space-between'}} mb={3} flexDir={{base:'column', md:'row'}} gap={2}>
+        <Heading fontSize={{base:'md', md:'2xl'}}>Sri Lanka's Wild Life Information System</Heading>
+        <Searchbar onSearchResults={handleSearchResults} />
+      </Flex>
+      
       <SimpleGrid columns={{ base: 2, md: 5 }} gap={3}>
         {data.map((d) => (
           <Card.Root
@@ -55,11 +67,14 @@ export default function Home() {
                 {d.name}
                 <Text fontSize={"xs"}>({d.scientific_name})</Text>
               </Card.Title>
-              <Card.Description fontWeight={'semibold'}>{d.common_names}</Card.Description>
+              <Card.Description fontWeight={"semibold"}>
+                {d.common_names}
+              </Card.Description>
+            </Card.Body>
+            <Card.Footer alignSelf={"start"}>
               <Tag.Root
                 size={"sm"}
-                variant={'solid'}
-                alignSelf={"start"}
+                variant={"solid"}
                 colorPalette={
                   d.venom_type === "venomous"
                     ? "red"
@@ -70,8 +85,7 @@ export default function Home() {
               >
                 <Tag.Label>{d.venom_type}</Tag.Label>
               </Tag.Root>
-            </Card.Body>
-            <Card.Footer alignSelf={"center"}></Card.Footer>
+            </Card.Footer>
           </Card.Root>
         ))}
       </SimpleGrid>

@@ -59,6 +59,7 @@ export default function Info() {
 
         <Separator my={5} />
 
+        {/* image display section */}
         <HStack mb={5} flexDir={{base:'column', md:'row'}} gap={{base:5 , md:10}}>
           <Box alignSelf={'start'}>
             <Text fontWeight="bold" color="teal.600">

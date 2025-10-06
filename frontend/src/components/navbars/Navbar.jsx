@@ -29,7 +29,7 @@ export default function Navbar() {
           color="white"
           size={{ base: "lg", md: "2xl" }}
         >
-          Wildy
+          🐍 Wildy
         </Heading>
       </Flex>
 
