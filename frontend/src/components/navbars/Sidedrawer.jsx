@@ -1,5 +1,6 @@
 import { Button, CloseButton, Drawer, Portal } from "@chakra-ui/react"
 import { GiHamburgerMenu } from "react-icons/gi";
+import Sidebar from "./Sidebar";
 
 const Sidedrawer = () => {
   return (
@@ -15,10 +16,7 @@ const Sidedrawer = () => {
               <Drawer.Title>Wildy</Drawer.Title>
             </Drawer.Header>
             <Drawer.Body>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
+              ggggggggg
             </Drawer.Body>
             <Drawer.Footer>
               <Button variant="outline">Cancel</Button>

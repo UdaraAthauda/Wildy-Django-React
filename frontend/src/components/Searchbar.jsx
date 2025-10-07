@@ -37,9 +37,8 @@ const Searchbar = ({onSearchResults, onBack}) => {
 
   return (
     <>
-    <Group as={"form"} onSubmit={handleSearch} attached w="full" maxW="sm">
+    <Group as={"form"} onSubmit={handleSearch} attached w="full" maxW="sm" colorPalette={'green'}>
       <Input
-        colorPalette={"green"}
         size={"sm"}
         flex="1"
         placeholder="Search..."
@@ -50,7 +49,6 @@ const Searchbar = ({onSearchResults, onBack}) => {
       <Button
         type="submit"
         size={"sm"}
-        colorPalette={"green"}
         variant="outline"
         loading={loading}
         loadingText="Searching..."

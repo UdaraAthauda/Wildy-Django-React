@@ -26,7 +26,7 @@ const Nocontent = ({ onBack }) => {
             </EmptyState.Description>
           </VStack>
           <ButtonGroup>
-            <Button onClick={handleBackToHome}>Go Back</Button>
+            <Button onClick={handleBackToHome} colorPalette={'green'}>Go Back</Button>
           </ButtonGroup>
         </EmptyState.Content>
       </EmptyState.Root>
