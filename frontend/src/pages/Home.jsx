@@ -1,4 +1,5 @@
 import api from "@/api";
+import Nocontent from "@/components/Nocontent";
 import Searchbar from "@/components/Searchbar";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { SimpleGrid, Button, Card, Image, Text, Tag, Flex, Heading } from "@chakra-ui/react";
@@ -30,12 +31,16 @@ export default function Home() {
     return <LoadingSpinner />;
   }
 
+  if (data[0].message === 'no_content') {
+    return <Nocontent onBack={getData} />
+  }
+
   return (
     <>
 
       <Flex align={'center'} justify={{base:'center', md:'space-between'}} mb={3} flexDir={{base:'column', md:'row'}} gap={2}>
         <Heading fontSize={{base:'md', md:'2xl'}}>Sri Lanka's Wild Life Information System</Heading>
-        <Searchbar onSearchResults={handleSearchResults} />
+        <Searchbar onSearchResults={handleSearchResults} onBack={getData} />
       </Flex>
       
       <SimpleGrid columns={{ base: 2, md: 5 }} gap={3}>

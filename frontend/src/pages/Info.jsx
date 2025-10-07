@@ -12,6 +12,7 @@ import {
   Badge,
   Image,
   HStack,
+  Card,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -100,7 +101,7 @@ export default function Info() {
                 : "green"
             }
           >
-            <Tag.Label>{data.venom_type}</Tag.Label>
+            <Tag.Label color={'white'}>{data.venom_type}</Tag.Label>
           </Tag.Root>
         </Box>
 
