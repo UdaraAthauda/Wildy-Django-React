@@ -4,11 +4,12 @@ import api from '@/api'
 
 export default function GoogleLoginButton() {
     const handleSuccess = async (credentialResponse) => {
-        const token = credentialResponse.credentialResponse
+        const token = credentialResponse.credential
+        console.log(token)
 
         try {
             const res = await api.post('auth/google/', {
-                access_token: token,
+                token: token,
             })
             console.log("backend res", res.data)
         } catch (error) {
