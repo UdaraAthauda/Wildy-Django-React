@@ -4,6 +4,7 @@ import api from "@/api";
 import { ACCESS_TOKEN, REFRESH_TOKEN, USER } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
+import { toaster } from "./ui/toaster";
 
 export default function GoogleLoginButton() {
   const navigate = useNavigate();
@@ -23,9 +24,23 @@ export default function GoogleLoginButton() {
 
       setAuthenticated(true);
 
+      toaster.create({
+        title: "Login Successful",
+        description: "Successfully logged in with Google",
+        type: "success",
+      });
+
       navigate("/logged");
     } catch (error) {
       console.error(error);
+
+      toaster.create({
+        title: "Login Failed",
+        description: "Google login was unsuccessful. Please try again.",
+        type: "error",
+        closable: true,
+        duration: Infinity,
+      });
     }
   };
   return (
