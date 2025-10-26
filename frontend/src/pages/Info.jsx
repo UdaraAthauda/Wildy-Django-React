@@ -5,17 +5,18 @@ import {
   Flex,
   Heading,
   Text,
-  Stack,
   Tag,
   SimpleGrid,
   Separator,
   Badge,
   Image,
   HStack,
-  Card,
+  Button,
+  VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { HiOutlineBookOpen, HiOutlinePencil } from "react-icons/hi";
 
 export default function Info() {
   const { id } = useParams();
@@ -49,39 +50,76 @@ export default function Info() {
         _hover={{ shadow: "2xl" }}
       >
         {/* Name Section */}
-        <Stack spacing={2} textAlign={{ base: "center", md: "left" }}>
-          <Heading size={{ base: "lg", md: "xl" }} color="teal.500">
-            {data.name} ({data.common_names || "N/A"})
-          </Heading>
-          <Text fontStyle="italic" color="gray.600">
-            {data.scientific_name}
-          </Text>
-        </Stack>
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          align={{ base: "center", md: "flex-start" }}
+          justify="space-between"
+          textAlign={{ base: "center", md: "left" }}
+          gap={4}
+        >
+          {/* Left section */}
+          <VStack align={{ base: "center", md: "flex-start" }} flex={1}>
+            <Heading size={{ base: "lg", md: "xl" }} color="teal.500">
+              {data.name} {data.common_names && `(${data.common_names})`}
+            </Heading>
+            <Text fontStyle="italic" color="gray.600">
+              {data.scientific_name}
+            </Text>
+          </VStack>
+
+          {/* Right section */}
+          <HStack gap={5}>
+            <Button size="sm" colorPalette={"green"}>
+              <HiOutlineBookOpen /> Read Blogs
+            </Button>
+            <Button size="sm" colorPalette={"yellow"}>
+              <HiOutlinePencil /> Write Blogs
+            </Button>
+          </HStack>
+        </Flex>
 
         <Separator my={5} />
 
         {/* image display section */}
-        <HStack mb={5} flexDir={{base:'column', md:'row'}} gap={{base:5 , md:10}}>
-          <Box alignSelf={'start'}>
+        <HStack
+          mb={5}
+          align={{ base: "center", md: "start" }}
+          flexDir={{ base: "column", md: "row" }}
+          spacing={{ base: 5, md: 10 }}
+          w="full"
+        >
+          {/* Left Section — Family Info */}
+          <Box flex={1} alignSelf={'self-start'} mb={3}>
             <Text fontWeight="bold" color="teal.600">
               Family:
             </Text>
             <Text>{data.family || "N/A"}</Text>
           </Box>
-          <Box>
-            <HStack flexDir={{base:'column', md:'row'}}>
-              {data.images.map((img) => (
-                <Image
-                  key={img.id}
-                  src={img.image}
-                  alt={img.caption}
-                  w={"200px"}
-                  h={"150px"}
-                  objectFit={"cover"}
-                  borderRadius={5}
-                />
-              ))}
-            </HStack>
+
+          {/* Right Section — Images */}
+          <Box flex={3} w="full">
+            <SimpleGrid
+              columns={{ base: 2, sm: 3, md: 4 }}
+              gap={{base:0, md:3}}
+              justifyItems="center"
+            >
+              {data.images?.length > 0 ? (
+                data.images.map((img) => (
+                  <Image
+                    key={img.id}
+                    src={img.image}
+                    alt={img.caption || "snake image"}
+                    w={{ base: "120px", sm: "150px", md: "200px" }}
+                    h={{ base: "100px", sm: "120px", md: "140px" }}
+                    objectFit="cover"
+                    borderRadius="md"
+                    shadow="sm"
+                  />
+                ))
+              ) : (
+                <Text>No images available</Text>
+              )}
+            </SimpleGrid>
           </Box>
         </HStack>
 
@@ -101,7 +139,7 @@ export default function Info() {
                 : "green"
             }
           >
-            <Tag.Label color={'white'}>{data.venom_type}</Tag.Label>
+            <Tag.Label color={"white"}>{data.venom_type}</Tag.Label>
           </Tag.Root>
         </Box>
 
