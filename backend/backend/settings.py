@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # local apps
     'api',
     'wild',
+    'blogs',
 ]
 
 SITE_ID = 1
