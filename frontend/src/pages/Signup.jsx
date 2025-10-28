@@ -9,7 +9,7 @@ export default function Signup() {
   const { isAuthenticated } = useContext(AuthContext);
 
   if (isAuthenticated) {
-    return <Navigate to='/logged' />
+    return <Navigate to='/' />
   }
 
   return (

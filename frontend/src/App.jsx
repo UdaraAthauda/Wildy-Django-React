@@ -7,11 +7,20 @@ import Info from "./pages/Info";
 import { AuthContext, AuthProvider } from "./components/AuthContext";
 import Logged from "./pages/Logged";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { toaster } from "./components/ui/toaster";
+import WriteBlog from "./pages/WriteBlog";
 
 function Logout() {
   const { setAuthenticated } = useContext(AuthContext)
   localStorage.clear()
   setAuthenticated(false)
+
+  toaster.create({
+    title: "Logging Out",
+    description: "Logout Successful",
+    type: "info"
+  })
+
   return <Navigate to='/' />
 }
 
@@ -27,6 +36,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/info/:id" element={<Info />} />
             <Route path="/logged" element={<ProtectedRoute><Logged /></ProtectedRoute>} />
+
+            <Route path="/write/:id/:name" element={<ProtectedRoute><WriteBlog /></ProtectedRoute>} />
           </Routes>
         </Layout>
       </AuthProvider>

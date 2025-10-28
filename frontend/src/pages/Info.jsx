@@ -15,7 +15,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { HiOutlineBookOpen, HiOutlinePencil } from "react-icons/hi";
 
 export default function Info() {
@@ -72,7 +72,7 @@ export default function Info() {
             <Button size="sm" colorPalette={"green"}>
               <HiOutlineBookOpen /> Read Blogs
             </Button>
-            <Button size="sm" colorPalette={"yellow"}>
+            <Button as={Link} to={`/write/${data.id}/${data.name+' '+`(${data.common_names})`}`} size="sm" colorPalette={"yellow"}>
               <HiOutlinePencil /> Write Blogs
             </Button>
           </HStack>

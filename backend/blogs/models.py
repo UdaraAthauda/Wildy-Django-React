@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from wild.models import Snake
 
 User = get_user_model()
 
@@ -22,6 +23,7 @@ class Blog(models.Model):
     
     title = models.CharField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blogs')
+    snake = models.ForeignKey(Snake, on_delete=models.SET_NULL, null=True, related_name='blogs')
     category = models.ForeignKey(BlogCategory, on_delete=models.SET_NULL, null=True, related_name='blogs')
     content = models.TextField()
     featured_image = models.ImageField(upload_to='blog_images/', blank=True, null=True)

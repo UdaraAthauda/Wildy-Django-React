@@ -30,7 +30,7 @@ export default function GoogleLoginButton() {
         type: "success",
       });
 
-      navigate("/logged");
+      navigate("/");
     } catch (error) {
       console.error(error);
 
