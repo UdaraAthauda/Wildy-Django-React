@@ -13,7 +13,7 @@ export default function Sidebar() {
       <Flex
         as={"nav"}
         minH={"100%"}
-        w={"15%"}
+        w={'200px'}
         gap={1}
         px={"40px"}
         py={"100px"}
@@ -29,7 +29,7 @@ export default function Sidebar() {
           borderRadius={"full"}
           variant={"subtle"}
           size={"sm"}
-          w={'100%'}
+          w={'full'}
           colorPalette={"blue"}
           style={({ isActive }) => ({
             backgroundColor: isActive ? "lightgreen" : "",
