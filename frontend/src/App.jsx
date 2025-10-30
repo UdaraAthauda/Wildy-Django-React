@@ -5,10 +5,10 @@ import Signup from "./pages/Signup";
 import Layout from "./components/ui/Layout";
 import Info from "./pages/Info";
 import { AuthContext, AuthProvider } from "./components/AuthContext";
-import Logged from "./pages/Logged";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { toaster } from "./components/ui/toaster";
 import WriteBlog from "./pages/WriteBlog";
+import ReadBlog from "./pages/ReadBlog";
 
 function Logout() {
   const { setAuthenticated } = useContext(AuthContext)
@@ -35,7 +35,7 @@ function App() {
 
             <Route path="/" element={<Home />} />
             <Route path="/info/:id" element={<Info />} />
-            <Route path="/logged" element={<ProtectedRoute><Logged /></ProtectedRoute>} />
+            <Route path="/read" element={<ReadBlog />} />
 
             <Route path="/write/:id/:name" element={<ProtectedRoute><WriteBlog /></ProtectedRoute>} />
           </Routes>

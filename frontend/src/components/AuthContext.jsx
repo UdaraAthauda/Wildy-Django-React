@@ -2,11 +2,13 @@ import api from "@/api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants";
 import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {
     const [isAuthenticated, setAuthenticated] = useState(null)
+    const navigate = useNavigate()
 
     // Decode and verify token validity
     const isTokenExpired = (token) => {
@@ -35,6 +37,7 @@ export const AuthProvider = ({children}) => {
             console.error('Token refresh error: ', error)
             localStorage.clear()
             setAuthenticated(false)
+            navigate('/logout')
         }
     }
 

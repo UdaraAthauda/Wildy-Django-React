@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
-from rest_framework import generics, filters
+from rest_framework import generics, filters, permissions
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from .models import Snake
 from .serializers import SnakeDetailSerializer
 from drf_yasg.utils import swagger_auto_schema
@@ -14,6 +14,7 @@ from drf_yasg.utils import swagger_auto_schema
     responses={200: 'successful'}
 )
 @api_view(['GET'])
+@permission_classes([permissions.AllowAny])
 def snake_info_list(request):
     snakes = Snake.objects.all()
     data = []
@@ -37,6 +38,7 @@ def snake_info_list(request):
 class SnakeListView(generics.ListAPIView):
     queryset = Snake.objects.all()
     serializer_class = SnakeDetailSerializer
+    permission_classes = [permissions.AllowAny]
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', 'scientific_name', 'common_names', 'venom_type', 'family']
     
@@ -44,4 +46,5 @@ class SnakeListView(generics.ListAPIView):
     
 class SnakeDetailView(generics.RetrieveAPIView):
     queryset = Snake.objects.all()
+    permission_classes = [permissions.AllowAny]
     serializer_class = SnakeDetailSerializer

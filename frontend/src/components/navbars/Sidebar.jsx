@@ -1,11 +1,12 @@
-import { Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { MdHome } from "react-icons/md";
+import { MdHome, MdOutlineMenuBook } from "react-icons/md";
 
 export default function Sidebar() {
   const routes = [
     { to:'/', label:'All info', icon:<MdHome />},
+    { to:'/read', label:'Blogs', icon:<MdOutlineMenuBook />},
   ]
 
   return (
@@ -14,7 +15,7 @@ export default function Sidebar() {
         as={"nav"}
         minH={"100%"}
         w={'200px'}
-        gap={1}
+        gap={3}
         px={"40px"}
         py={"100px"}
         bg={"teal"}
@@ -30,13 +31,17 @@ export default function Sidebar() {
           variant={"subtle"}
           size={"sm"}
           w={'full'}
+          justifyContent={'flex-start'}
           colorPalette={"blue"}
           style={({ isActive }) => ({
             backgroundColor: isActive ? "lightgreen" : "",
             color: isActive ? "green" : "",
           })}
         >
-          {icon} {label}
+          <HStack align={'center'} gap={3}>
+            {icon}
+            <Box>{label}</Box>
+          </HStack>
         </Button>
         ))}
       </Flex>
