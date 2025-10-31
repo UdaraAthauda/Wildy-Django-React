@@ -11,7 +11,8 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { MdHome } from "react-icons/md";
+import { MdHome, MdOutlineMenuBook } from "react-icons/md";
+import { FaPencilAlt } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import { USER } from "@/constants";
@@ -21,7 +22,11 @@ const Sidedrawer = () => {
   const { isAuthenticated } = useContext(AuthContext);
   const user = localStorage.getItem(USER);
 
-  const routes = [{ to: "/", label: "All info", icon: <MdHome /> }];
+  const routes = [
+    { to: "/", label: "All info", icon: <MdHome /> },
+    { to: "/readList", label: "Blogs", icon: <MdOutlineMenuBook /> },
+    { to:'/written', label:'Written', icon:<FaPencilAlt />},
+  ];
 
   return (
     <Drawer.Root
@@ -44,7 +49,7 @@ const Sidedrawer = () => {
                 as={"nav"}
                 minH={"100%"}
                 p={5}
-                gap={1}
+                gap={2}
                 bg={"teal"}
                 borderRadius={5}
                 flexDir={"column"}
@@ -75,25 +80,23 @@ const Sidedrawer = () => {
                 <Menu.Root>
                   <Menu.Trigger>
                     <HStack>
-                    <Text>Logged in User:</Text>
-                    <Avatar.Root
-                      variant={"solid"}
-                      colorPalette={"blue"}
-                    >
-                      <Avatar.Fallback name={user} />
-                    </Avatar.Root>
+                      <Text>Logged in User:</Text>
+                      <Avatar.Root variant={"solid"} colorPalette={"blue"}>
+                        <Avatar.Fallback name={user} />
+                      </Avatar.Root>
                     </HStack>
                   </Menu.Trigger>
-                  
-                    <Menu.Positioner>
-                      <Menu.Content>
-                        <Menu.Item value="new-txt">Profile</Menu.Item>
-                        <Menu.Item value="new-file">
-                          <Link to="/logout" onClick={() => setOpen(false)}>Logout</Link>
-                        </Menu.Item>
-                      </Menu.Content>
-                    </Menu.Positioner>
-                  
+
+                  <Menu.Positioner>
+                    <Menu.Content>
+                      <Menu.Item value="new-txt">Profile</Menu.Item>
+                      <Menu.Item value="new-file">
+                        <Link to="/logout" onClick={() => setOpen(false)}>
+                          Logout
+                        </Link>
+                      </Menu.Item>
+                    </Menu.Content>
+                  </Menu.Positioner>
                 </Menu.Root>
               ) : (
                 <Button

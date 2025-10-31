@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Blog
 
 class BlogSerializer(serializers.ModelSerializer):
+    snake_name = serializers.ReadOnlyField(source="snake.common_names")
     class Meta:
         model = Blog
         fields = '__all__'

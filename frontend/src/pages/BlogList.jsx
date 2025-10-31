@@ -7,12 +7,14 @@ import {
   Heading,
   HStack,
   SimpleGrid,
+  Tag,
   Text,
+  VStack,
   Wrap,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
-export default function ReadBlog() {
+export default function BlogList() {
   const [data, setData] = useState([]);
 
   const getData = async () => {
@@ -71,9 +73,15 @@ export default function ReadBlog() {
               >
                 {d.title}
               </Text>
-              <Text flexShrink={0} ml={2}>
-                {new Date(d.created_at).toLocaleDateString()}
-              </Text>
+
+              <VStack align={'flex-end'}>
+                <Tag.Root colorPalette={'green'}>
+                  <Tag.Label>about: {d.snake_name}</Tag.Label>
+                </Tag.Root>
+                <Text flexShrink={0} ml={2}>
+                  {new Date(d.created_at).toLocaleDateString()}
+                </Text>
+              </VStack>
             </HStack>
           </Box>
         ))}

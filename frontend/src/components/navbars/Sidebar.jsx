@@ -2,11 +2,13 @@ import { Box, Button, Flex, HStack, Text } from "@chakra-ui/react";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { MdHome, MdOutlineMenuBook } from "react-icons/md";
+import { FaPencilAlt } from "react-icons/fa";
 
 export default function Sidebar() {
   const routes = [
     { to:'/', label:'All info', icon:<MdHome />},
-    { to:'/read', label:'Blogs', icon:<MdOutlineMenuBook />},
+    { to:'/readList', label:'Blogs', icon:<MdOutlineMenuBook />},
+    { to:'/written', label:'Written', icon:<FaPencilAlt />},
   ]
 
   return (
