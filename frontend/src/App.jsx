@@ -10,6 +10,7 @@ import { toaster } from "./components/ui/toaster";
 import WriteBlog from "./pages/WriteBlog";
 import BlogList from "./pages/BlogList";
 import WrittenBlogs from "./pages/WrittenBlogs";
+import EditBlog from "./pages/EditBlog";
 
 function Logout() {
   const { setAuthenticated } = useContext(AuthContext)
@@ -40,6 +41,7 @@ function App() {
 
             <Route path="/write/:id/:name" element={<ProtectedRoute><WriteBlog /></ProtectedRoute>} />
             <Route path="/written" element={<ProtectedRoute><WrittenBlogs /></ProtectedRoute>} />
+            <Route path="/edit/:id" element={<ProtectedRoute><EditBlog /></ProtectedRoute>} />
           </Routes>
         </Layout>
       </AuthProvider>

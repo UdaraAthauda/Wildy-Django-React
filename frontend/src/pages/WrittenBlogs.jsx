@@ -12,6 +12,8 @@ import {
   Tag,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import bgimg from "../assets/bgimg.png";
+import { Link } from "react-router-dom";
 
 export default function WrittenBlogs() {
   const [data, setData] = useState([]);
@@ -55,15 +57,15 @@ export default function WrittenBlogs() {
               transition: "0.2s",
             }}
           >
-            <Image src={d.featured_image} h={"150px"} />
+            <Image src={d.featured_image || bgimg} h={"150px"} />
             <Card.Body gap={2}>
-              <Card.Description>{d.title}</Card.Description>
               <Tag.Root colorPalette={"green"}>
                 <Tag.Label>about: {d.snake_name}</Tag.Label>
               </Tag.Root>
+              <Card.Description>{d.title}</Card.Description>
             </Card.Body>
             <Card.Footer>
-              <Button variant="solid" size={"xs"}>
+              <Button as={Link} to={`/edit/${d.id}`} variant="solid" size={"xs"} colorPalette={'green'}>
                 Edit Blog
               </Button>
               <Spacer />
