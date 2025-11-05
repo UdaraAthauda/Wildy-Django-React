@@ -1,4 +1,5 @@
 import api from "@/api";
+import ConfirmAlert from "@/components/ConfirmAlert";
 import ImageUploader from "@/components/ImageUploader";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { toaster } from "@/components/ui/toaster";
@@ -17,13 +18,15 @@ import {
   Box,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditBlog() {
   const { id } = useParams();
   const [publishing, setPublishing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -33,6 +36,7 @@ export default function EditBlog() {
     status: "draft",
   });
 
+  // fetching data from backend
   const getData = async () => {
     try {
       const res = await api.get(`blogs/blog/${id}/`);
@@ -42,7 +46,6 @@ export default function EditBlog() {
         title: res.data.title,
         snake: res.data.snake,
         content: res.data.content,
-        featured_image: res.data.featured_image,
         status: res.data.status,
       });
     } catch (error) {
@@ -54,14 +57,17 @@ export default function EditBlog() {
     getData();
   }, [id]);
 
+  // handle the form inputs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // handle the image file input
   const handleImageChange = (file) => {
     setFormData({ ...formData, featured_image: file });
   };
 
+  // handle the data submision to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -69,7 +75,6 @@ export default function EditBlog() {
 
     const updatedFormData = {
       ...formData,
-      snake: id,
       status,
     };
 
@@ -80,43 +85,61 @@ export default function EditBlog() {
     }
 
     try {
-      await api.post("blogs/blog/", updatedFormData, {
+      await api.patch(`blogs/blog/${id}/`, updatedFormData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
       if (status === "published") {
         toaster.create({
-          title: "Published",
+          title: "Edited & Published",
           description: "Blog is successfully published",
           type: "success",
         });
       } else {
         toaster.create({
-          title: "Draft",
+          title: "Edited & Draft",
           description: "Draft Blog successfully saved",
           type: "success",
         });
       }
 
-      setFormData({
-        title: "",
-        snake: null,
-        content: "",
-        featured_image: null,
-        status: "draft",
-      });
+      navigate("/written");
     } catch (error) {
       console.error(error);
 
       toaster.create({
         title: "Failed",
-        description: "Blog posting is unsuccessful",
+        description: "Blog editing is unsuccessful",
         type: "error",
       });
     } finally {
       setPublishing(false);
       setSaving(false);
     }
+  };
+
+  // handle delete a blog post
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`blogs/blog/${id}/`)
+
+      toaster.create({
+        title: "Successfully Deleted",
+        description: "Your Blog Post is Deleted from the Database",
+        type: 'info',
+      })
+
+      navigate("/written");
+    } catch (error) {
+      console.error(error)
+
+      toaster.create({
+        title: "Failed",
+        description: "Blog deleting is unsuccessful",
+        type: "error",
+      });
+    }
+    
   };
 
   if (data.length === 0) {
@@ -175,9 +198,9 @@ export default function EditBlog() {
                   <ImageUploader onFileSelect={handleImageChange} />
                 </Field.Root>
 
-                {formData.featured_image ? (
+                {data.featured_image ? (
                   <Image
-                    src={formData.featured_image}
+                    src={data.featured_image}
                     flex={1}
                     alt="Featured_image"
                     h={"300px"}
@@ -185,9 +208,9 @@ export default function EditBlog() {
                   />
                 ) : (
                   <Box
-                    flex={{base: "none", md: 1}}
+                    flex={{ base: "none", md: 1 }}
                     h="200px"
-                    w={'full'}
+                    w={"full"}
                     display="flex"
                     alignItems="center"
                     justifyContent="center"
@@ -201,32 +224,42 @@ export default function EditBlog() {
             </Stack>
           </Card.Body>
           <Card.Footer justifyContent="flex-end">
-            {formData.status === 'draft' && (
-            <Button
-              variant="outline"
-              name="status"
-              value={"draft"}
-              type="submit"
-              loading={saving}
-              loadingText="Saving Draft..."
-            >
-              Save as a Draft
-            </Button>
-            )}
+            <Stack flexDir={{ base: "column", md: "row" }}>
+              <HStack>
+                {formData.status === "draft" && (
+                  <Button
+                    variant="outline"
+                    name="status"
+                    value={"draft"}
+                    type="submit"
+                    loading={saving}
+                    loadingText="Saving Draft..."
+                  >
+                    Save as a Draft
+                  </Button>
+                )}
 
-            <Button
-              variant="solid"
-              colorPalette={"green"}
-              name="status"
-              value={"published"}
-              type="submit"
-              loading={publishing}
-              loadingText="Publishing Blog..."
-            >
-              Publish the Blog
-            </Button>
+                <Button
+                  variant="solid"
+                  colorPalette={"green"}
+                  name="status"
+                  value={"published"}
+                  type="submit"
+                  loading={publishing}
+                  loadingText="Publishing Blog..."
+                >
+                  Publish the Blog
+                </Button>
+              </HStack>
 
-            <Button variant={'subtle'} colorPalette={'red'}>Delete Blog</Button>
+              <ConfirmAlert
+                btnName="Delete Blog"
+                btnColor="red"
+                message="This action cannot be undone. This will permanently delete your
+                blog post from the database."
+                onConfirm={() => handleDelete(data.id)}
+              />
+            </Stack>
           </Card.Footer>
         </Card.Root>
       </Flex>
