@@ -60,7 +60,7 @@ export default function WrittenBlogs() {
             <Image src={d.featured_image || bgimg} h={"150px"} />
             <Card.Body gap={2}>
               <Tag.Root colorPalette={"green"}>
-                <Tag.Label>about: {d.snake_name}</Tag.Label>
+                <Tag.Label>About: {d.snake_name}</Tag.Label>
               </Tag.Root>
               <Card.Description>{d.title}</Card.Description>
             </Card.Body>

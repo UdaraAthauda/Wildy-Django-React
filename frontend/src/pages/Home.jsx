@@ -52,7 +52,7 @@ export default function Home() {
             w={{ base: "full", md: "200px" }}
             size={"sm"}
             overflow="hidden"
-            bg={"green.400"}
+            bg={"green.300"}
             justifySelf={"center"}
             _hover={{
               shadow: "xl",

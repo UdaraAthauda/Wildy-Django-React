@@ -11,6 +11,7 @@ import WriteBlog from "./pages/WriteBlog";
 import BlogList from "./pages/BlogList";
 import WrittenBlogs from "./pages/WrittenBlogs";
 import EditBlog from "./pages/EditBlog";
+import ReadBlog from "./pages/ReadBlog";
 
 function Logout() {
   const { setAuthenticated } = useContext(AuthContext)
@@ -38,6 +39,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/info/:id" element={<Info />} />
             <Route path="/readList" element={<BlogList />} />
+            <Route path="/read/:id" element={<ReadBlog />} />
 
             <Route path="/write/:id/:name" element={<ProtectedRoute><WriteBlog /></ProtectedRoute>} />
             <Route path="/written" element={<ProtectedRoute><WrittenBlogs /></ProtectedRoute>} />
